@@ -1,0 +1,8 @@
+.vscode 
+.DS_Store
+.ipynb_checkpoints
+Manifest.toml
+./test/*
+./Cauchy*/
+./Normal*/
+./teststatistics*/
