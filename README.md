@@ -85,7 +85,7 @@ We provide example implementations of the listed test cases to be used with Juli
 
 
 ## List of metrics
-The following metrics can be used to compare custom generated MC samples to IID samples.
+The following metrics are available to compare custom generated MC samples to IID samples.
 
 ### One-sample metrics
 - Marginal mean: `marginal_mean()`
