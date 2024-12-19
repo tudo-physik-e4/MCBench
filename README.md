@@ -36,7 +36,7 @@ Standard_Normal_3D_Uncorrelated = Testcases(f,bounds,3,"Normal-3D-Uncorrelated")
  
 #### Selecting the metrics to be applied
 ```
-metrics = [marginal_mean(),marginal_variance(),sliced_wasserstein_distance(),maximum_mean_discrepancy()]
+metrics = [marginal_mean(), marginal_variance(), sliced_wasserstein_distance(), maximum_mean_discrepancy()]
  ```
  
 #### Load the external MC samples to be tested
@@ -68,9 +68,13 @@ plot_metrics(Standard_Normal_3D_Uncorrelated, metrics, sampler)
 ```
 plot_teststatistic(Standard_Normal_3D_Uncorrelated, marginal_mean(), sampler, nbins=20)
 ```
-
+<img src="docs/Normal-3D-Uncorrelated-SlicedWasserstein.svg" width="480"/>
 
 ## List of test cases
+The following table contains all test cases currently available in the benchmark suite.
+When implementing one of these into the MC sampling framework of your choice, you can use the given testpoints to validate your implementation.  
+We provide example implementations of the listed test cases to be used with Julia, Python, R and Stan.  
+*This table is not yet complete and will be extended* 
 | Name                            | Equation                                                                                                                                                                                                                   | Parameters                                | Testpoints                                                                                        | Julia | Python | R   | Stan |
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------ | ----- | ------ | --- | ---- |
 | Standard Normal 1D              | $f(x\|\mu, \sigma) =\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}$                                                                                                                                      | $\mu = 0, \sigma = 0$                     | $f(x=0) = 0.39894228$, $f(x=1) = 0.24197072$                                                     | ✅     |    ✅     |  ✅    |   ✅    |
@@ -81,6 +85,7 @@ plot_teststatistic(Standard_Normal_3D_Uncorrelated, marginal_mean(), sampler, nb
 
 
 ## List of metrics
+The following metrics can be used to compare custom generated MC samples to IID samples.
 
 ### One-sample metrics
 - Marginal mean: `marginal_mean()`
