@@ -195,3 +195,31 @@ function maximum_mean_discrepancy(val::V, N::Int) where {V<:Real} maximum_mean_d
 function calc_metric(t::AT, s1::DensitySampleVector, s2::DensitySampleVector, m::maximum_mean_discrepancy) where {AT<:AbstractTestcase}
     return [(maximum_mean_discrepancy(get_mmd(s1, s2, N=m.N)))]
 end
+
+#Chi^2 test metric struct and constructors
+struct chi_squared{
+    V<:Real,
+    A<:Any,
+} <: TwoSampleMetric
+    val::V
+    info::A
+end
+
+
+function chi_squared() chi_squared(0.0, "Chi-Squared") end
+function chi_squared(val::V) where {V<:Real} chi_squared(val,"Chi-Squared") end
+
+# Calculation of Sliced Wasserstein distance metric
+function calc_metric(t::AT, s1::DensitySampleVector, s2::DensitySampleVector, m::chi_squared) where {AT<:AbstractTestcase}
+    return chisq_test(s1, s2)
+end
+
+function chisq_test(s1::DensitySampleVector, s2::DensitySampleVector)
+    #s1 = iid
+    s1, s2 = prepare_twosample_dsv(s1, s2)
+    x = Matrix{Float64}(hcat(unshaped.(s1).v...))
+    y = Matrix{Float64}(hcat(unshaped.(s2).v...))
+    mx = [mean(i) for i in eachrow(x)]
+    sx = [var(i) for i in eachrow(x)]
+    [chi_squared(sum(y[i,:] .- mx[i])/sx[i]) for i in 1:size(x,1)]
+end
