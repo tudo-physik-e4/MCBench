@@ -1,5 +1,5 @@
 
-# MCBench: Monte Carlo Sampling Benchmark Suite
+# MCBench - Monte Carlo Sampling Benchmark Suite
 
 The **MCBench** benchmark suite is designed for quantitative comparisons of Monte Carlo (MC) samples. It offers a standardized method for evaluating MC sample quality and provides researchers and practitioners with a tool for validating, developing, and refining MC sampling algorithms. 
 
