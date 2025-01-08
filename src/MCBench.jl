@@ -12,7 +12,6 @@ using StructArrays
 using HypothesisTests
 using DensityInterface
 import DensityInterface: logdensityof
-using IPMeasures
 using Distances 
 using DataFrames
 using CSV
