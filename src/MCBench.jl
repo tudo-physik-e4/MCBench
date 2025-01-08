@@ -1,3 +1,5 @@
+module BAT
+
 using Distributions 
 using Statistics 
 using ValueShapes
@@ -29,3 +31,5 @@ include("plotting_teststat.jl")
 include("batmh.jl")
 include("../examples/example_distributions.jl")
 include("../examples/example_posteriordb.jl")
+
+end # module
