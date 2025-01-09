@@ -1,4 +1,4 @@
-module BAT
+module MCBench
 
 using Distributions 
 using Statistics 
