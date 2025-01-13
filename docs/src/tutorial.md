@@ -6,12 +6,12 @@ This is a simple example of how to use the MCBench package.
 f = MvNormal(zeros(3), I(3))
 bounds = NamedTupleDist(x = [-10..10 for i in 1:3])
 Standard_Normal_3D_Uncorrelated = Testcases(f,bounds,3,"Normal-3D-Uncorrelated")
- ```
+```
  
 ## Selecting the metrics to be applied
 ```
 metrics = [marginal_mean(), marginal_variance(), sliced_wasserstein_distance(), maximum_mean_discrepancy()]
- ```
+```
  
 ## Load the external MC samples to be tested
 ```
@@ -36,10 +36,10 @@ n=100, n_steps=10^5, n_samples=10^5, s=sampler)
 ```
 plot_metrics(Standard_Normal_3D_Uncorrelated, metrics, sampler)
 ```
-<img src="docs/Normal-3D-Uncorrelated-metrics.svg" width="480"/>
+<img src="../images/Normal-3D-Uncorrelated-metrics.svg" width="480"/>
 
 - Individual metrics
 ```
 plot_teststatistic(Standard_Normal_3D_Uncorrelated, marginal_mean(), sampler, nbins=20)
 ```
-<img src="docs/Normal-3D-Uncorrelated-SlicedWasserstein.svg" width="480"/>
+<img src="../images/Normal-3D-Uncorrelated-SlicedWasserstein.svg" width="480"/>
