@@ -1,6 +1,5 @@
 # MCBench - Monte Carlo Sampling Benchmark Suite
 
-[![Documentation for stable version](https://img.shields.io/badge/docs-stable-blue.svg)](https://tudo-physik-e4.github.io/MCBench/stable)
 [![Documentation for development version](https://img.shields.io/badge/docs-dev-blue.svg)](https://tudo-physik-e4.github.io/MCBench/dev)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
 [![CI](https://github.com/tudo-physik-e4/MCBench/actions/workflows/ci.yml/badge.svg)](https://github.com/tudo-physik-e4/MCBench/actions/workflows/ci.yml)
