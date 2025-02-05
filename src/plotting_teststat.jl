@@ -1,3 +1,32 @@
+"""
+    plot_metrics(t::AbstractTestcase, normvals::Vector{NamedTuple}; plotalpha=0.2, infos=[], s=[]) 
+    plot_teststatistic(t::AbstractTestcase, m::TM) where {TM <: TestMetric}
+    plot_teststatistic(t::AbstractTestcase, m::TM, s::AnySampler; nbins=32, same_bins=true,sampler_bins=false)
+
+Functions to plot test statistics and overview plots for a given test case and metrics.
+These functions are subject to change and changed for recepies and are not guaranteed to be stable
+
+# Arguments
+- `t::AbstractTestcase`: The open file stream from which the line is read.
+- `m::TM`: The metric for which the test statistic is plotted.
+- `s::AnySampler`: The sampling algorithm for which the test statistic is plotted.
+- `nbins::Int`: The number of bins for the histogram.
+- `same_bins::Bool`: Whether to use the same bins for the test statistic and the sampling algorithm.
+- `sampler_bins::Bool`: Whether to use the bins of the sampling algorithm for the test statistic or from the IID samples. This should be set to `true` as the distribution of the test statistics for the sampler i svery likely have a wider range than the IID samples.
+
+
+# Example
+```julia
+t = MyTestcase()
+m = [MyMetric_1(), MyMetric_2()]
+s = MySampler()
+
+plot_teststatistic(t, m, s; nbins=32, same_bins=true, sampler_bins=true)
+plot_metrics(t, normvals; plotalpha=0.2, infos=[], s=[])
+
+```
+"""
+
 # Function to plot the test statistic for a given test case and metric
 function plot_teststatistic(t::AbstractTestcase, m::TM) where {TM <: TestMetric}
     mvals = read_teststatistic(t, m)

@@ -1,26 +1,52 @@
+"""
+    abstract type AnySampler
+
+An abstract type that serves as a base for all sampling algorithms.
+"""
+
+"""
+    abstract type SamplingAlgorithm <: AnySampler
+
+An abstract type for general sampling algorithms that inherit from `AnySampler`.
+"""
+
+"""
+    abstract type IIDSamplingAlgorithm <: SamplingAlgorithm
+
+An abstract type for independent and identically distributed (IID) sampling algorithms that inherit from `SamplingAlgorithm`.
+This type doesn't have any fields or methods, but it is used to have testfunctions reference their IID `Base.rand` method when sampling. 
+"""
+
+"""
+    abstract type AbstractFileBasedSampler <: AnySampler
+
+An abstract type for file-based sampling algorithms that inherit from `AnySampler`.
+"""
 # Define abstract types for sampling algorithms
 abstract type AnySampler end
 abstract type SamplingAlgorithm  <: AnySampler end
 abstract type IIDSamplingAlgorithm <: SamplingAlgorithm end
 abstract type AbstractFileBasedSampler <: AnySampler end
 
-# Basic test sampler struct and constructor
-struct TestSampler <: SamplingAlgorithm 
-    info::String 
-end
+"""
+    struct IIDSampler <: IIDSamplingAlgorithm
 
-function TestSampler() 
-    TestSampler("test") 
-end
+A struct representing an IID (Independent and Identically Distributed) Sampler to created instances of IID sampling algorithms.
 
-# IIDSampler
+# Fields
+- `n_steps::Int`: The number of steps for the sampler. Identical to the number of samples for IID.
+- `info::String`: Information or description of the sampler.
+
+# Constructors
+- `IIDSampler()`: Creates an `IIDSampler` with default values of `10^5` steps and "IID" as the info string.
+"""
+
 struct IIDSampler <: IIDSamplingAlgorithm 
     n_steps::Int
     info::String
 end
 
 IIDSampler() = IIDSampler(10^5,"IID")
-
 
 """
     struct FileBasesSampler <: SamplingAlgorithm
@@ -31,6 +57,12 @@ IO funtionalities to read data from a set of files.
 - `current_file_index::Int`: Index of the current file in the vector.
 - `current_position::Int`: Position within the current file.
 - `current_file_handle::IOStream`: Handle to the currently open file.
+- `info::String`: Information about the sampler. Used for plotting.
+
+# Constructors
+- `FileBasedSampler(; fields...)`
+- `FileBasedSampler(file_paths::Vector{String})`: Creates a `FileBasedSampler` with the given vector of file paths.
+- `FileBasedSampler(path::String)`: Creates a `FileBasedSampler` with the given file path. This will load all files in the directory if the path is a directory.
 """
 
 mutable struct FileBasedSampler <: AbstractFileBasedSampler
@@ -101,6 +133,12 @@ end
     - `fbs::FileBasedSampler`: File-based sampler
     - `header::Vector{String}`: Header of the CSV file
     - `mask::Vector{Int}`: Mask to extract the desired columns
+    - `info::String`: Information about the sampler
+
+    # Constructors
+    - `CsvBasedSampler(; fields...)`
+    - `CsvBasedSampler(file_paths::Vector{String})`: Creates a `CsvBasedSampler` with the given vector of file paths.
+    - `CsvBasedSampler(path::String)`: Creates a `CsvBasedSampler` with the given file path. This will load all files in the directory if the path is a directory.
 """
 
 mutable struct CsvBasedSampler <: AbstractFileBasedSampler
@@ -158,6 +196,10 @@ end
     - `total_samples::Int`: Total number of samples
     - `neff::Vector{Float64}`: Number of effective samples
     - `info::String`: Information about the sampler
+
+    # Constructors
+    - `DsvSampler(; fields...)`
+    - `DsvSampler(dsvs::Vector{D})`: Creates a `DsvSampler` with the given vector of file paths.
 """
 
 mutable struct DsvSampler{D<:DensitySampleVector} <: AbstractFileBasedSampler

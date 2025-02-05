@@ -1,3 +1,11 @@
+"""
+    wasserstein1d(a::Vector, b::Vector; p=1, wa=nothing, wb=nothing)
+    get_sliced_wasserstein_distance(sample1::DensitySampleVector, sample2::DensitySampleVector; L=1000, p=1, N=0, parallel=true)
+
+Functions to calculate the Wasserstein distance between two 1D distributions and the sliced Wasserstein distance between two probability distributions.
+This code is adapted from the [Transport package in R](https://cran.r-project.org/web/packages/transport/index.html) translated to Julia.
+"""
+
 # Function to repeat values based on corresponding repeat counts
 rep(values, repeats) = reduce(vcat, map((v, r) -> repeat([v], r), values, repeats))
 

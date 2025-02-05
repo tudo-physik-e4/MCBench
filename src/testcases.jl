@@ -1,8 +1,38 @@
-# Abstract type for test cases
-abstract type AbstractTestcase end
-abstract type Target end
+"""
+    abstract type Target
 
-# Struct for test cases with specified types for distributions, bounds, dimensions, and additional information
+Targets are used to represent the target distributions of test cases.
+Make sure to define the `Base.rand`, `Base.length` and `Distributions.logpdf` methods for the target distribution.
+See the posterior database example for more details.
+"""
+
+"""
+    abstract type AbstractTestcase
+An abstract type for any test cases.
+"""
+
+abstract type Target end
+abstract type AbstractTestcase end
+
+"""
+    struct Testcases <: AbstractTestcase
+
+A struct representing a test case to be used in the framework of MCBench.
+Testcases must consisit of a distribution or Target that is sampleable and a set of bounds.
+
+# Fields
+- `f::D`: The distribution or Target of the test case.
+- `bounds::B`: The bounds of the test case.
+- `dim::N`: The dimension of the test case.
+- `info::A`: Additional information about the test case.
+
+# Constructors
+- `Testcases(; fields...)`: Creates a test case with the given fields.
+- `Testcases(f::D, bounds::B, dim::N, info::A)`: Creates a test case with the given distribution or target, bounds, dimension and additional information.
+- `Testcases(f::D, dim::N, info::A)`: Creates a test case with the given distribution or target, dimension and additional information. Bounds are set to `[-10..10]` for each dimension.
+
+"""
+
 struct Testcases{
     D<:Union{Distribution,Target},
     B<:NamedTupleDist,
@@ -23,6 +53,17 @@ end
 
 # Indicate that the given type is a density
 @inline DensityInterface.DensityKind(::Testcases) = IsDensity()
+
+
+"""
+    sample(t::Testcases; n_steps=10^5)::DensitySampleVector
+    sample(t::Testcases, n::Int)::DensitySampleVector
+    sample(t::Testcases, s::IIDSamplingAlgorithm; n_steps=10^5)::DensitySampleVector
+
+IID sampling from the distribution of the test case `t` with `n_steps` or `n` samples.
+When integrating a custom sampling algorithm, the `sample` method should be overloaded for the new sampling algorithm type for `s`.
+Returns a density sample vector with the samples and the log densities.
+"""
 
 # IID sampling from the distribution of the test case
 # Wrapping the samples into DensitySampleVector
@@ -45,6 +86,16 @@ function sample(t::Testcases, s::IIDSamplingAlgorithm; n_steps=10^5)
     end
     DensitySampleVector([x = s[:, i] for i in 1:size(s, 2)], lgd)
 end
+
+"""
+
+    sample(t<:AbsatractTestcase, s<:AbstractFileBasedSampler; n_steps=10^5)::DensitySampleVector
+
+Sampling from the distribution of the test case `t` using a file-based sampler `s` with `n_steps` samples.
+The test case is not used in the sampling process, but it is used to calculate the log densities of the samples. 
+Returns a density sample vector with the samples and the log densities.
+
+"""
 
 #Sampling using a file-based sampler
 function sample(t::AT, s::FBA; n_steps=10^4) where {AT <: AbstractTestcase, FBA <: AbstractFileBasedSampler}
@@ -92,6 +143,24 @@ function sample(s::DsvSampler; t=0, n_steps=10^4)
 end
 
 
+"""
+    struct DsvTestcase <: AbstractTestcase
+
+A struct representing a test case based on DensitySampleVectors.
+This is meant to be used as IIDs when the samples are precalculated and stored in a file.
+In that case samples should be read from the file converted to a DensitySampleVector and used as the test case.
+
+# Fields
+- `sampler::DS`: The sampler that generates the samples.
+- `dim::N`: The dimension of the test case.
+- `info::A`: Additional information about the test case.
+
+# Constructors
+- `DsvTestcase(s::DS, n::Int, info::A)`: Creates a test case with the given sampler, dimension and additional information.
+- `DsvTestcase(s::DS, info::A)`: Creates a test case with the given sampler and additional information. The dimension is set to the dimension of the samples.
+
+"""
+
 # Struct for test cases using DSV to use as IID for twosampleteststatics from precalculated samples
 struct DsvTestcase{
     DS<:DsvSampler,
@@ -107,6 +176,16 @@ function DsvTestcase(s::DS; n=0, info="DsvTestcase") where {DS <: DsvSampler}
     n = length(s.dsvs[1].v[1])
     DsvTestcase(s, n, info)
 end
+
+
+"""
+
+    sample(t::DsvTestcase; n_steps=10^5)::DensitySampleVector
+    sample(t::DsvTestcase, s::SamplingAlgorithm; n_steps=10^5)::DensitySampleVector
+
+The `sample` methods using `DsvTestcase` using the same logic as for `Testcases` but using the precalculated samples no matter the sampler used. 
+
+"""
 
 function sample(t::DsvTestcase, n::Int)
     sample(t.sampler, t=t, n_steps=n)
