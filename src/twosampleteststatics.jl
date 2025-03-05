@@ -41,7 +41,6 @@ When no samples and sampling algorithm are provided, the function samples using 
 - `TwoSampleMetric`: The calculated metric value.
 
 """
-
 function run_teststatistic(
     t::TSM, 
     samples1::DensitySampleVector,

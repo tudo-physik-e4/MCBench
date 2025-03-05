@@ -10,7 +10,6 @@ See the posterior database example for more details.
     abstract type AbstractTestcase
 An abstract type for any test cases.
 """
-
 abstract type Target end
 abstract type AbstractTestcase end
 
@@ -32,7 +31,6 @@ Testcases must consisit of a distribution or Target that is sampleable and a set
 - `Testcases(f::D, dim::N, info::A)`: Creates a test case with the given distribution or target, dimension and additional information. Bounds are set to `[-10..10]` for each dimension.
 
 """
-
 struct Testcases{
     D<:Union{Distribution,Target},
     B<:NamedTupleDist,
@@ -64,9 +62,6 @@ IID sampling from the distribution of the test case `t` with `n_steps` or `n` sa
 When integrating a custom sampling algorithm, the `sample` method should be overloaded for the new sampling algorithm type for `s`.
 Returns a density sample vector with the samples and the log densities.
 """
-
-# IID sampling from the distribution of the test case
-# Wrapping the samples into DensitySampleVector
 function sample(t::Testcases; n_steps=10^5)
     s = rand(t.f, n_steps)  # Generate random samples from the distribution
     lgd = logpdf(t.f, s)  # Compute the log densities of the samples
@@ -96,8 +91,6 @@ The test case is not used in the sampling process, but it is used to calculate t
 Returns a density sample vector with the samples and the log densities.
 
 """
-
-#Sampling using a file-based sampler
 function sample(t::AT, s::FBA; n_steps=10^4) where {AT <: AbstractTestcase, FBA <: AbstractFileBasedSampler}
     sample(s,t=t,n_steps=n_steps)
 end
@@ -160,8 +153,6 @@ In that case samples should be read from the file converted to a DensitySampleVe
 - `DsvTestcase(s::DS, info::A)`: Creates a test case with the given sampler and additional information. The dimension is set to the dimension of the samples.
 
 """
-
-# Struct for test cases using DSV to use as IID for twosampleteststatics from precalculated samples
 struct DsvTestcase{
     DS<:DsvSampler,
     A<:Any,
@@ -186,7 +177,6 @@ end
 The `sample` methods using `DsvTestcase` using the same logic as for `Testcases` but using the precalculated samples no matter the sampler used. 
 
 """
-
 function sample(t::DsvTestcase, n::Int)
     sample(t.sampler, t=t, n_steps=n)
 end
@@ -199,4 +189,3 @@ end
 function sample(t::DsvTestcase, s::FBA; n_steps=10^5) where {FBA <: FileBasedSampler}
     sample(s, t=t, n_steps=n_steps)
 end
-

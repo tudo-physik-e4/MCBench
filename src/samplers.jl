@@ -3,26 +3,22 @@
 
 An abstract type that serves as a base for all sampling algorithms.
 """
-
 """
     abstract type SamplingAlgorithm <: AnySampler
 
 An abstract type for general sampling algorithms that inherit from `AnySampler`.
 """
-
 """
     abstract type IIDSamplingAlgorithm <: SamplingAlgorithm
 
 An abstract type for independent and identically distributed (IID) sampling algorithms that inherit from `SamplingAlgorithm`.
 This type doesn't have any fields or methods, but it is used to have testfunctions reference their IID `Base.rand` method when sampling. 
 """
-
 """
     abstract type AbstractFileBasedSampler <: AnySampler
 
 An abstract type for file-based sampling algorithms that inherit from `AnySampler`.
 """
-# Define abstract types for sampling algorithms
 abstract type AnySampler end
 abstract type SamplingAlgorithm  <: AnySampler end
 abstract type IIDSamplingAlgorithm <: SamplingAlgorithm end
@@ -40,7 +36,6 @@ A struct representing an IID (Independent and Identically Distributed) Sampler t
 # Constructors
 - `IIDSampler()`: Creates an `IIDSampler` with default values of `10^5` steps and "IID" as the info string.
 """
-
 struct IIDSampler <: IIDSamplingAlgorithm 
     n_steps::Int
     info::String
@@ -64,7 +59,6 @@ IO funtionalities to read data from a set of files.
 - `FileBasedSampler(file_paths::Vector{String})`: Creates a `FileBasedSampler` with the given vector of file paths.
 - `FileBasedSampler(path::String)`: Creates a `FileBasedSampler` with the given file path. This will load all files in the directory if the path is a directory.
 """
-
 mutable struct FileBasedSampler <: AbstractFileBasedSampler
     files::Vector{String}           # Vector of file paths
     current_file_index::Int         # Index of the current file in the vector
@@ -140,7 +134,6 @@ end
     - `CsvBasedSampler(file_paths::Vector{String})`: Creates a `CsvBasedSampler` with the given vector of file paths.
     - `CsvBasedSampler(path::String)`: Creates a `CsvBasedSampler` with the given file path. This will load all files in the directory if the path is a directory.
 """
-
 mutable struct CsvBasedSampler <: AbstractFileBasedSampler
     fbs::FileBasedSampler           # File-based sampler
     header::Vector{String}          # Header of the CSV file
@@ -201,7 +194,6 @@ end
     - `DsvSampler(; fields...)`
     - `DsvSampler(dsvs::Vector{D})`: Creates a `DsvSampler` with the given vector of file paths.
 """
-
 mutable struct DsvSampler{D<:DensitySampleVector} <: AbstractFileBasedSampler
     dsvs::Vector{D}   # Vector of file paths
     current_dsv_index::Int              # Index of the current file in the vector
@@ -250,5 +242,3 @@ function unweight!(sampler::DsvSampler)
     #     sampler.dsvs[i] = dsv_unw
     # end
 end
-
-

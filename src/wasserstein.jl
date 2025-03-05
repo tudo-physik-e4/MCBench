@@ -5,8 +5,6 @@
 Functions to calculate the Wasserstein distance between two 1D distributions and the sliced Wasserstein distance between two probability distributions.
 This code is adapted from the [Transport package in R](https://cran.r-project.org/web/packages/transport/index.html) translated to Julia.
 """
-
-# Function to repeat values based on corresponding repeat counts
 rep(values, repeats) = reduce(vcat, map((v, r) -> repeat([v], r), values, repeats))
 
 # Function to calculate the Wasserstein distance for 1D distributions
@@ -147,7 +145,6 @@ Compute the sliced Wasserstein distance between two probability distributions.
 ## Returns
 The sliced Wasserstein distance between `dist1` and `dist2`.
 """
-
 function get_sliced_wasserstein_distance(dist1, dist2; d=50, L=1000, p=1, N=100_000)
     samples_A = [rand(dist1, d) for i in 1:N]
     samples_B = [rand(dist2, d) for i in 1:N]

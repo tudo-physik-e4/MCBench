@@ -26,8 +26,6 @@ plot_metrics(t, normvals; plotalpha=0.2, infos=[], s=[])
 
 ```
 """
-
-# Function to plot the test statistic for a given test case and metric
 function plot_teststatistic(t::AbstractTestcase, m::TM) where {TM <: TestMetric}
     mvals = read_teststatistic(t, m)
     dims = t.dim

@@ -7,8 +7,6 @@ Functions to calculate the Maximum Mean Discrepancy (MMD) between two samples.
 This code is adapted from the [IPMeasures.jl](https://github.com/aicenter/IPMeasures.jl) package.
 Please refer to the repository for the original implementation.
 """
-
-
 abstract type AbstractKernel end
 const MetricOrFun = Union{PreMetric,Function}
 

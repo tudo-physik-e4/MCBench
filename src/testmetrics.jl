@@ -8,7 +8,6 @@ Metrics are designed to be both structs that hold the metric value and determine
 
 An abstract type for any two-sample test metrics. Such as Wasserstein, MMD, etc.
 """
-
 abstract type TestMetric end
 abstract type TwoSampleMetric <: TestMetric end
 
@@ -21,8 +20,6 @@ abstract type TwoSampleMetric <: TestMetric end
     This function is used to calculate the metric value for a given test case and samples for any metric type.
     `TwoSampleMetric` metrics can also be used, however the `calc_metric` then samples a second set of IID samples to compare against. 
 """
-
-
 """
     struct marginal_mean{V<:Real,A<:Any} <: TestMetric
 
@@ -37,8 +34,6 @@ abstract type TwoSampleMetric <: TestMetric end
     A struct for the mean value for each dimension of the samples as a metric.
     
 """
-
-# Marginal mean metric struct and constructors
 struct marginal_mean{
     V<:Real,
     A<:Any,
@@ -70,7 +65,6 @@ end
     A struct for the variance for each dimension of the samples as a metric.
     
 """
-
 struct marginal_variance{
     V<:Real,
     A<:Any,
@@ -102,7 +96,6 @@ end
     A struct for the global mode of the samples as a metric. This will return the mode as a vector of the mode for each dimension.
     
 """
-
 struct global_mode{
     V<:Real,
     A<:Any,
@@ -134,7 +127,6 @@ end
     A struct for the marginal_mode of the samples as a metric. Marginal modes are calculated for each dimension of the samples and returned as a vector of `marginal_mode` values.
     
 """
-
 struct marginal_mode{
     V<:Real,
     A<:Any,
@@ -165,7 +157,6 @@ end
     A struct for the marginal_skewness of the samples as a metric. Marginal skewness are calculated for each dimension of the samples and returned as a vector of `marginal_skewness` values.
     
 """
-
 struct marginal_skewness{
     V<:Real,
     A<:Any,
@@ -195,7 +186,6 @@ end
     A struct for the marginal_kurtosis of the samples as a metric. Marginal kurtosis are calculated for each dimension of the samples and returned as a vector of `marginal_kurtosis` values.
     
 """
-
 struct marginal_kurtosis{
     V<:Real,
     A<:Any,
@@ -226,7 +216,6 @@ end
     A struct for the wasserstein_1d of the samples as a metric. The Wasserstein distance is calculated for each dimension separately and returned as a vector of `wasserstein_1d` values.
     
 """
-
 struct wasserstein_1d{
     V<:Real,
     A<:Any,
@@ -261,7 +250,6 @@ end
     The sliced Wasserstein distance is calculated by projecting the samples onto a random direction and calculating the Wasserstein distance in that direction.
     
 """
-
 struct sliced_wasserstein_distance{
     V<:Real,
     I<:Int,
@@ -309,7 +297,6 @@ end
     Per default the number of points used to calculate the maximum mean discrepancy is 10^4.
     
 """
-
 struct maximum_mean_discrepancy{
     V<:Real,
     I<:Int,
@@ -345,7 +332,6 @@ end
     The chi-squared is calculated for each dimension separately using an unbinned chi-squared. 
     
 """
-
 struct chi_squared{
     V<:Real,
     A<:Any,

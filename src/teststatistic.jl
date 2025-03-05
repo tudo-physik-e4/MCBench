@@ -1,4 +1,3 @@
-
 """
     run_teststatistic(t, samples::DensitySampleVector, m::TM, s)
 
@@ -17,7 +16,6 @@ Calculate and return a metric value based on the provided test case, sample vect
 This function has two implementations to accommodate different secnatios. In case the metrics are calculated on IID samples an `Int` can be passed as the sampler as an actual sampler is not needed.  
 
 """
-
 # Overloaded function to run a test statistic with a test case, density sample vector, and sampling algorithm
 function run_teststatistic(t::AT, samples::DensitySampleVector, m::TM, s::AS) where {TM <: TestMetric, AT <: AbstractTestcase, AS <: AnySampler}
     mval = calc_metric(t, samples, m)
@@ -72,9 +70,6 @@ testcase = MyTestcase()
 build_teststatistic(testcase, metrics; n=100, par=true, clean=true)
 ```
 """
-
-
-# Function to build a test statistic
 function build_teststatistic(t::T, m::Vector{TM}; s=IIDSampler(), n::Int=10^2, n_steps::Int=10^5, n_samples::Int=10^5, par::Bool=true, clean::Bool=false, unweight::Bool=true, use_sampler::Bool=true, iid=false) where {T<:AbstractTestcase, TM <: TestMetric}
     fnm = [string("./teststatistics/", string(t.info, "-", im.info, ".txt")) for im in m]
     if !isa(s, IIDSamplingAlgorithm) && !iid
@@ -134,9 +129,6 @@ build_teststat_reshuffle(testcase, 100, metrics, file_streams; n_steps=10^4, unw
 # Error Handling
 - Ensures file streams are closed in case of unexpected errors during execution.
 """
-
-
-# Function to build reshuffled test statistics
 function build_teststat_reshuffle(t::T, n::Int, m::Vector{TM}, fnm::Vector{IOStream}; 
     s=IIDSampler(), n_steps=10^5, n_samples=0, unweight=true, par=false, use_sampler=true) where {TM <: TestMetric, T<:AbstractTestcase}
     v = 0
@@ -220,7 +212,6 @@ statistics_with_sampler = read_teststatistic(testcase, metric, sampler)  # With 
 println(statistics_with_sampler)
 ```
 """
-
 function read_teststatistic(t::AbstractTestcase, m::TM) where {TM <: TestMetric}
     filename = string(t.info, "-", m.info, ".txt")
     parse_teststatistic(string("./teststatistics/", filename))
@@ -252,7 +243,6 @@ statistics = parse_teststatistic("./teststatistics/example.txt")
 println(statistics)
 ```
 """
-
 function parse_teststatistic(filename::String)
     f = open(string(filename), "r")
     mvals = JSON.parse.(readlines(f))
