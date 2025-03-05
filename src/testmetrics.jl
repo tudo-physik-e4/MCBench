@@ -3,25 +3,18 @@
 
 An abstract type for any test metrics. Each metric is its own struct and must implement the `calc_metric` function.
 Metrics are designed to be both structs that hold the metric value and determine which version of `calc_metric` to dispatch.
+"""
+abstract type TestMetric end
 
+"""
     abstract type TwoSampleMetric
 
 An abstract type for any two-sample test metrics. Such as Wasserstein, MMD, etc.
 """
-abstract type TestMetric end
 abstract type TwoSampleMetric <: TestMetric end
 
 """
-    calc_metric(t::AbstractTestcase, 
-    s::DensitySampleVector, 
-    m::TestMetric)
-
-    Calculate the metric `m` for the test case `t` and the samples `s`.
-    This function is used to calculate the metric value for a given test case and samples for any metric type.
-    `TwoSampleMetric` metrics can also be used, however the `calc_metric` then samples a second set of IID samples to compare against. 
-"""
-"""
-    struct marginal_mean{V<:Real,A<:Any} <: TestMetric
+struct marginal_mean{V<:Real,A<:Any} <: TestMetric
 
     # Fields
     - `val::V`: The value of the metric.
@@ -45,7 +38,15 @@ end
 function marginal_mean() marginal_mean(0.0, "Mean") end
 function marginal_mean(val::V) where {V<:Real} marginal_mean(val, "Mean") end
 
-# Calculation of marginal mean metric
+"""
+    calc_metric(t::AbstractTestcase, 
+    s::DensitySampleVector, 
+    m::TestMetric)
+
+    Calculate the metric `m` for the test case `t` and the samples `s`.
+    This function is used to calculate the metric value for a given test case and samples for any metric type.
+    `TwoSampleMetric` metrics can also be used, however the `calc_metric` then samples a second set of IID samples to compare against. 
+"""
 function calc_metric(t::AT, s::DensitySampleVector, m::marginal_mean) where {AT <: AbstractTestcase}
     vals = isa(BAT.mean(s), NamedTuple) ? Vector{Float64}(collect(values(BAT.mean(s)))[1]) : BAT.mean(s)
     return [marginal_mean(i) for i in vals]

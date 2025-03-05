@@ -3,25 +3,25 @@
 
 An abstract type that serves as a base for all sampling algorithms.
 """
+abstract type AnySampler end
 """
     abstract type SamplingAlgorithm <: AnySampler
 
 An abstract type for general sampling algorithms that inherit from `AnySampler`.
 """
+abstract type SamplingAlgorithm  <: AnySampler end
 """
     abstract type IIDSamplingAlgorithm <: SamplingAlgorithm
 
 An abstract type for independent and identically distributed (IID) sampling algorithms that inherit from `SamplingAlgorithm`.
 This type doesn't have any fields or methods, but it is used to have testfunctions reference their IID `Base.rand` method when sampling. 
 """
+abstract type IIDSamplingAlgorithm <: SamplingAlgorithm end
 """
     abstract type AbstractFileBasedSampler <: AnySampler
 
 An abstract type for file-based sampling algorithms that inherit from `AnySampler`.
 """
-abstract type AnySampler end
-abstract type SamplingAlgorithm  <: AnySampler end
-abstract type IIDSamplingAlgorithm <: SamplingAlgorithm end
 abstract type AbstractFileBasedSampler <: AnySampler end
 
 """
