@@ -34,6 +34,7 @@ struct marginal_mean{
     val::V
     info::A
 end
+export marginal_mean
 
 function marginal_mean() marginal_mean(0.0, "Mean") end
 function marginal_mean(val::V) where {V<:Real} marginal_mean(val, "Mean") end
@@ -73,6 +74,7 @@ struct marginal_variance{
     val::V
     info::A
 end
+export marginal_variance
 
 function marginal_variance() marginal_variance(0.0, "Variance") end
 function marginal_variance(val::V) where {V<:Real} marginal_variance(val, "Variance") end
@@ -104,6 +106,7 @@ struct global_mode{
     val::V
     info::A
 end
+export global_mode
 
 function global_mode() global_mode(0.0, "Globalmode") end
 function global_mode(val::V) where {V<:Real} global_mode(val, "Globalmode") end
@@ -135,6 +138,7 @@ struct marginal_mode{
     val::V
     info::A
 end
+export marginal_mode
 
 function marginal_mode() marginal_mode(0.0, "Marginalmode") end
 function marginal_mode(val::V) where {V<:Real} marginal_mode(val, "Marginalmode") end
@@ -165,6 +169,7 @@ struct marginal_skewness{
     val::V
     info::A
 end
+export marginal_skewness
 
 function marginal_skewness() marginal_skewness(0.0, "Skewness") end
 function marginal_skewness(val::V) where {V<:Real} marginal_skewness(val, "Skewness") end
@@ -194,6 +199,7 @@ struct marginal_kurtosis{
     val::V
     info::A
 end
+export marginal_kurtosis
 
 function marginal_kurtosis() marginal_kurtosis(0.0, "Kurtosis") end
 function marginal_kurtosis(val::V) where {V<:Real} marginal_kurtosis(val, "Kurtosis") end
@@ -224,6 +230,7 @@ struct wasserstein_1d{
     val::V
     info::A
 end
+export wasserstein_1d
 
 function wasserstein_1d() wasserstein_1d(0.0, "Wasserstein") end
 function wasserstein_1d(val::V) where {V<:Real} wasserstein_1d(val, "Wasserstein") end
@@ -262,6 +269,7 @@ struct sliced_wasserstein_distance{
     info::A
     proc::P
 end
+export sliced_wasserstein_distance
 
 # Helper function for initializing Sliced Wasserstein distance metric
 function wd_pint()
@@ -309,6 +317,7 @@ struct maximum_mean_discrepancy{
     info::A
     proc::P
 end
+export maximum_mean_discrepancy
 
 function maximum_mean_discrepancy() maximum_mean_discrepancy(0.0, 10^4, "MaximumMeanDiscrepancy", wd_pint()) end
 function maximum_mean_discrepancy(val::V) where {V<:Real} maximum_mean_discrepancy(val, 10^4, "MaximumMeanDiscrepancy", "") end
@@ -340,6 +349,7 @@ struct chi_squared{
     val::V
     info::A
 end
+export chi_squared
 
 
 function chi_squared() chi_squared(0.0, "Chi-Squared") end
@@ -359,3 +369,5 @@ function chisq_test(s1::DensitySampleVector, s2::DensitySampleVector)
     sx = [var(i) for i in eachrow(x)]
     [chi_squared(sum(y[i,:] .- mx[i])/sx[i]) for i in 1:size(x,1)]
 end
+
+export calc_metric

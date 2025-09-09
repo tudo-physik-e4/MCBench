@@ -42,6 +42,7 @@ struct Testcases{
     dim::N        # Dimension
     info::A       # Additional info
 end
+export Testcases
 
 # Constructor for test cases without bounds
 function Testcases(f::D, dim::N, info::A) where {D <: Union{Distribution,Target}, N <: Int, A <: Any}
@@ -162,6 +163,7 @@ struct DsvTestcase{
     dim::N        # Dimension
     info::A       # Additional info
 end
+export DsvTestcase
 
 function DsvTestcase(s::DS; n=0, info="DsvTestcase") where {DS <: DsvSampler}
     n = length(s.dsvs[1].v[1])
@@ -189,3 +191,4 @@ end
 function sample(t::DsvTestcase, s::FBA; n_steps=10^5) where {FBA <: FileBasedSampler}
     sample(s, t=t, n_steps=n_steps)
 end
+export sample

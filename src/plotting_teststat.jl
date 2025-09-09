@@ -58,6 +58,7 @@ function plot_teststatistic(t::AbstractTestcase, m::TM, s::AnySampler; nbins=32,
         savefig(string("./", t.info, "/", t.info, "-", m.info, "", s.info, "-x", idim, ".pdf"))
     end
 end
+export plot_teststatistic
 
 
 # Core function to plot normalized metric values
@@ -127,3 +128,4 @@ function plot_metrics(t::AbstractTestcase, ms::Vector{TM}, s::AnySampler; names=
     end
     plot_metrics(t, normvals, s=s)
 end
+export plot_metrics

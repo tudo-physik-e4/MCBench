@@ -74,6 +74,6 @@ end
 
 
 bounds = NamedTupleDist(x = [i==10 ? 10^-100..100 : -100..100 for i in 1:10])
-stan_data = JSON.parsefile("../examples/eight_schools.json")
+stan_data = JSON.parsefile(joinpath(@__DIR__, "..", "examples/eight_schools.json"))
 eight_schools_testcase = Testcases(EightSchoolsAcceptReject(stan_data,false),bounds,10,"EightSchoolsAcceptReject")
 eight_schools_testcase_trafo = Testcases(EightSchoolsAcceptReject(stan_data,true),bounds,10,"EightSchoolsAcceptReject")

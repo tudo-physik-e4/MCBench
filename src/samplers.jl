@@ -66,6 +66,7 @@ mutable struct FileBasedSampler <: AbstractFileBasedSampler
     current_file_handle::IOStream   # Handle to the currently open file
     info::String                    # Information about the sampler
 end
+export FileBasedSampler
 
 function FileBasedSampler(file_paths::Vector{String}; info::String="FileBasedSampler")
     @assert !isempty(file_paths) "File paths cannot be empty"
@@ -140,6 +141,7 @@ mutable struct CsvBasedSampler <: AbstractFileBasedSampler
     mask::Vector{Int}               # Mask to extract the desired columns
     info::String                    # Information about the sampler
 end
+export CsvBasedSampler
 
 function CsvBasedSampler(file_paths::Vector{String}; info::String="CsvBasedSampler")
     fbs = FileBasedSampler(file_paths,info=info)
@@ -203,6 +205,7 @@ mutable struct DsvSampler{D<:DensitySampleVector} <: AbstractFileBasedSampler
     neff::Vector{Float64}               # Number of effective samples
     info::String                        # Information about the sampler
 end
+export DsvSampler
 
 function DsvSampler(dsvs::Vector{D}; info::String="DsvSampler") where {D<:DensitySampleVector}
     @assert !isempty(dsvs) "Density sample vectors cannot be empty"

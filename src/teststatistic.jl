@@ -25,6 +25,7 @@ end
 function run_teststatistic(t::Testcases, samples::DensitySampleVector, m::TM, s::Int) where {TM <: TestMetric}
     mval = calc_metric(t, samples, m)
 end
+export run_teststatistic
 
 
 """
@@ -87,6 +88,7 @@ function build_teststatistic(t::T, m::Vector{TM}; s=IIDSampler(), n::Int=10^2, n
         close.(fs)
     end
 end
+export build_teststatistic
 
 """
     build_teststat_reshuffle(t<:AbstractTestcase, n::Int, m::Vector{TestMetric}, fnm::Vector{IOStream}; 
