@@ -62,7 +62,7 @@ export plot_teststatistic
 
 
 # Core function to plot normalized metric values
-function plot_metrics(t::AbstractTestcase, normvals::Vector{NamedTuple}; plotalpha=0.2, infos=[], s=[]) where {TM <: TestMetric}
+function plot_metrics(t::AbstractTestcase, normvals::Vector{NamedTuple}; plotalpha=0.2, infos=[], s=[])
     normvals=reverse(normvals)
     mkpath(string("./", t.info))
     ylen = length(normvals) * 30

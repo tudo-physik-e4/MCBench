@@ -26,9 +26,6 @@ end
 
 # Sample function for test cases using BAT Metropolis-Hastings (MH) sampler
 function sample(t::Testcases, s::BATMH; n_steps::Int=10^5, nchains::Int=10)
-    bat_sample(buildBATPosterior(t), BATMH(n_steps=n_steps, nchains=nchains).sampler).result
-end
-
-function sample(t::Testcases, s::BATMH)
-    bat_sample(buildBATPosterior(t), s.sampler).result
+    sampler = (n_steps != 10^5 || nchains != 10) ? BATMH(n_steps=n_steps, nchains=nchains).sampler : s.sampler
+    bat_sample(buildBATPosterior(t), sampler).result
 end
