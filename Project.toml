@@ -1,7 +1,7 @@
 name = "MCBench"
 uuid = "3951c326-33a3-4e32-9c78-203120422c33"
 authors = ["Salvatore La Cagnina", "Cornelius Grunwald"]
-version = "1.0.0-DEV"
+version = "0.1.0"
 
 [deps]
 BAT = "c0cd4b16-88b7-57fa-983b-ab80aecada7e"
