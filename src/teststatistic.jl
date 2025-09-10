@@ -18,6 +18,9 @@ This function has two implementations to accommodate different secnatios. In cas
 """
 # Overloaded function to run a test statistic with a test case, density sample vector, and sampling algorithm
 function run_teststatistic(t::AT, samples::DensitySampleVector, m::TM, s::AS) where {TM <: TestMetric, AT <: AbstractTestcase, AS <: AnySampler}
+    if m isa TwoSampleMetric
+        return run_teststatistic_two_sample_metric(t, samples, m, s)
+    end
     mval = calc_metric(t, samples, m)
 end
 

@@ -61,7 +61,7 @@ function run_teststatistic(
     mval = calc_metric(t,iids1,samples,m)
 end
 
-function run_teststatistic(
+function run_teststatistic_two_sample_metric( #to avoid method ambiguity
     t::TSM, 
     samples::DensitySampleVector,
     m::TM,
